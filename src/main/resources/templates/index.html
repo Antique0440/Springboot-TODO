@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+<body>
+
+<h1>Todo List</h1>
+
+<form action="/todos" method="post">
+    <input
+            type="text"
+            name="title"
+            placeholder="What needs to be done?"
+            required
+    >
+    <button type="submit">Add</button>
+</form>
+
+<p th:if="${error}" th:text="${error}"></p>
+
+<p th:if="${#lists.isEmpty(todos)}">No tasks yet.</p>
+
+<ul>
+    <li th:each="todo : ${todos}">
+        <span th:text="${todo.title}">Example task</span>
+    </li>
+</ul>
+
+</body>
+</html>
