@@ -4,10 +4,9 @@ import org.benjamincharles.todo.model.Todo;
 import org.benjamincharles.todo.service.TodoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -36,5 +35,24 @@ public class TodoController {
         todoService.createTodo(title.trim());
         return "redirect:/";
     }
+    @PostMapping("/todos/{id}/edit")
+    public String updateTodo(
+            @PathVariable Long id,
+            @RequestParam String title
+
+    ){
+        if (title == null || title.isBlank()){
+            return "redirect:/";
+        }
+        todoService.updateTodo(id, title);
+        return "redirect:/";
+
+    }
+    @PostMapping("/todos/{id}/toggle")
+    public String toggleTodo(@PathVariable Long id){
+        todoService.toggleTodo(id);
+        return "redirect:/";
+    }
+
 
 }

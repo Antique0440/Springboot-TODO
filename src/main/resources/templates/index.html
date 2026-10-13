@@ -20,13 +20,30 @@
     <button type="submit">Add</button>
 </form>
 
+
+
 <p th:if="${error}" th:text="${error}"></p>
 
 <p th:if="${#lists.isEmpty(todos)}">No tasks yet.</p>
 
 <ul>
-    <li th:each="todo : ${todos}">
-        <span th:text="${todo.title}">Example task</span>
+    <li th:each="todo : ${todos}"
+    th:style="${todo.completed} ? 'text-decoration: line-through' : 'text-decoration: none'">
+        <form th:action = "@{/todos/{id}/edit(id=${todo.id})}" method = "post">
+            <input
+            type = "text"
+            name = "title"
+            th:value="${todo.title}"
+            required>
+            <button type="Submit">Save</button>
+
+
+        </form>
+        <form th:action="@{/todos/{id}/toggle(id=${todo.id})}" method="post">
+            <button type="submit"
+                    th:text="${todo.completed} ? 'Mark as incomplete' : 'Mark as complete'">
+            </button>
+        </form>
     </li>
 </ul>
 

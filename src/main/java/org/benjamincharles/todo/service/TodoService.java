@@ -19,4 +19,16 @@ public class TodoService{
         Todo todo = new Todo(title);
         return todoRepository.save(todo);
     }
+    public void updateTodo(Long id,String title){
+        Todo todo = todoRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Todo not found"));
+        todo.setTitle(title.trim());
+        todoRepository.save(todo);
+    }
+    public void toggleTodo(Long id) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Todo not found"));
+
+        todo.setCompleted(!todo.isCompleted());
+        todoRepository.save(todo);
+    }
 }
